@@ -1,0 +1,33 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * DirectoryContact plugin for Craft CMS
+ *
+ * Contactperson Field Settings
+ *
+ * @author    Niklas Sonnenschein
+ * @copyright Copyright (c) 2019 Niklas Sonnenschein
+ * @link      https://niklassonnenschein.de
+ * @package   DirectoryContact
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+
+{% set options = [] %}
+{% set allSections = craft.app.sections.getAllSections() %}
+{% for section in allSections %}
+    {% if section.type == "channel" %}
+      {% set options = options|merge([{label: section.name, value: section.handle}]) %}
+    {% endif %}
+{% endfor %}
+
+{{ forms.selectField({
+    label: 'Quelle',
+    instructions: 'Eine Kategorie auswählen, aus der Personen angezeigt werden sollen',
+    id: 'source',
+    name: 'source',
+    value: field['source'],
+    options: options})
+}}

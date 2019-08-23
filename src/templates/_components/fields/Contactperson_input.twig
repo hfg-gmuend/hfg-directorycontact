@@ -1,0 +1,26 @@
+{# @var craft \craft\web\twig\variables\CraftVariable #}
+{#
+/**
+ * DirectoryContact plugin for Craft CMS 3.x
+ *
+ * Contactperson Field Input
+ *
+ * @author    Niklas Sonnenschein
+ * @copyright Copyright (c) 2019 Niklas Sonnenschein
+ * @link      https://niklassonnenschein.de
+ * @package   DirectoryContact
+ * @since     1.0.0
+ */
+#}
+
+{% import "_includes/forms" as forms %}
+{{ forms.elementSelectField({
+			id: id,
+			name: name,
+			elementType: "craft\\elements\\Entry",
+      sources: ["section:"~source.uid],
+      elements: element,
+      showSiteMenu: false,
+      storageKey: 'field.'~field.id,
+			limit: 1
+		}) }}

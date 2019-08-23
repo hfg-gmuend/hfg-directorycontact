@@ -1,0 +1,40 @@
+{
+    "name": "hfg/directory-contact",
+    "description": "Displays specific contact information.",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "directorycontact"
+    ],
+    "support": {
+        "docs": "???",
+        "issues": "???"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Niklas Sonnenschein",
+            "homepage": "https://niklassonnenschein.de"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.0.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "hfg\\directorycontact\\": "src/"
+        }
+    },
+    "extra": {
+        "name": "DirectoryContact",
+        "handle": "directory-contact",
+        "hasCpSettings": false,
+        "hasCpSection": false,
+        "changelogUrl": "???",
+        "class": "hfg\\directorycontact\\DirectoryContact"
+    }
+}
