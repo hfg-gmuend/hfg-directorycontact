@@ -11,6 +11,7 @@
 namespace hfg\directorycontact;
 
 use hfg\directorycontact\fields\Contactperson as ContactpersonField;
+use hfg\directorycontact\models\Contact;
 
 use Craft;
 use craft\base\Plugin;
@@ -18,6 +19,9 @@ use craft\services\Plugins;
 use craft\events\PluginEvent;
 use craft\services\Fields;
 use craft\events\RegisterComponentTypesEvent;
+use craft\events\RegisterUrlRulesEvent;
+use crat\helpers\UrlHelper;
+use craft\web\UrlManager;
 
 use yii\base\Event;
 
@@ -58,22 +62,9 @@ class DirectoryContact extends Plugin
         parent::init();
         self::$plugin = $this;
 
-        Event::on(
-            Fields::class,
-            Fields::EVENT_REGISTER_FIELD_TYPES,
-            function (RegisterComponentTypesEvent $event) {
-                $event->types[] = ContactpersonField::class;
-            }
-        );
-
-        Event::on(
-            Plugins::class,
-            Plugins::EVENT_AFTER_INSTALL_PLUGIN,
-            function (PluginEvent $event) {
-                if ($event->plugin === $this) {
-                }
-            }
-        );
+        $this->_registerFieldTypes();
+        $this->_registerCpRoutes();
+        $this->_registerSiteRoutes();
 
         Craft::info(
             Craft::t(
@@ -85,7 +76,39 @@ class DirectoryContact extends Plugin
         );
     }
 
+    private function _registerFieldTypes()
+    {
+      Event::on(Fields::class, Fields::EVENT_REGISTER_FIELD_TYPES, function (RegisterComponentTypesEvent $event) {
+        $event->types[] = ContactpersonField::class;
+      });
+    }
+
+    private function _registerCpRoutes()
+    {
+      Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_CP_URL_RULES, function (RegisterUrlRulesEvent $event) {
+        $rules = [
+          'directory-contact/explorer' => 'directory-contact/explorer/get-contact'
+        ];
+        $event->rules = array_merge($event->rules, $rules);
+      });
+    }
+
+    private function _registerSiteRoutes()
+    {
+      Event::on(UrlManager::class, UrlManager::EVENT_REGISTER_SITE_URL_RULES, function (RegisterUrlRulesEvent $event) {
+        $rules = [
+          'directory-contact/explorer' => 'directory-contact/explorer'
+        ];
+        $event->rules = array_merge($event->rules, $rules);
+      });
+    }
+
     // Protected Methods
     // =========================================================================
+
+    protected function createContactModel()
+    {
+      return new Contact();
+    }
 
 }

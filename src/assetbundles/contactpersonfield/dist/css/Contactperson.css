@@ -9,3 +9,7 @@
  * @package   DirectoryContact
  * @since     1.0.0
  */
+
+.field textarea[disabled] {
+  opacity: 0.25;
+}

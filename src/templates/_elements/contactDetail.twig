@@ -1,0 +1,35 @@
+{% if contact %}
+  {% import "_includes/forms" as forms %}
+
+  {{ forms.textField({
+      label: "Name",
+      value: [contact.honorific, contact.firstname, contact.lastname]|join(" "),
+      disabled: true})
+  }}
+
+  {{ forms.textareaField({
+      label: "Bezeichnung",
+      value: contact.jobtitle,
+      disabled: true})
+  }}
+
+  {{ forms.selectField({
+      id: id ~ "__email",
+      name: name ~ "[email]",
+      label: "E-Mail",
+      value: email,
+      options: contact.email|split("\n"),
+      disabled: (contact.email|split("\n")|length > 1 ? false : true)
+      })
+  }}
+
+  {{ forms.selectField({
+      id: id ~ "__telephone",
+      name: name ~ "[telephone]",
+      label: "Telefon",
+      value: telephone,
+      options: contact.telephone|split("\n"),
+      disabled: (contact.telephone|split("\n")|length > 1 ? false : true)
+      })
+  }}
+{% endif %}
