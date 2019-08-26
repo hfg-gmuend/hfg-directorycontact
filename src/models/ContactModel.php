@@ -3,9 +3,10 @@
 namespace hfg\directorycontact\models;
 
 use Craft;
-use craft\base\Models;
+use yii\base\Model;
 
-class Contact extends Model {
+class ContactModel extends Model
+{
   public $person = '';
   public $email = '';
   public $telephone = '';
@@ -15,5 +16,10 @@ class Contact extends Model {
     return [
       ['person', 'required']
     ];
+  }
+
+  public function __toString()
+  {
+
   }
 }

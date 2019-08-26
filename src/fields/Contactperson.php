@@ -12,6 +12,7 @@ namespace hfg\directorycontact\fields;
 
 use hfg\directorycontact\DirectoryContact;
 use hfg\directorycontact\assetbundles\contactpersonfield\ContactpersonFieldAsset;
+use hfg\directorycontact\models\ContactModel;
 
 use Craft;
 use craft\base\Element;
@@ -35,7 +36,13 @@ class Contactperson extends Field
     /**
      * @var string
      */
-    public $columnType = 'mixed';
+    public $person = '';
+    public $someAttribute = '';
+    public $source = '';
+    public $dropdownOptions = '';
+    public $telephone = '';
+    public $email = '';
+    public $columnType = 'text';
 
     // Static Methods
     // =========================================================================
@@ -69,30 +76,16 @@ class Contactperson extends Field
      */
      public function normalizeValue($value, ElementInterface $element = null)
      {
-       if(is_string($value))
-        {
-            $value = JsonHelper::decodeIfJson($value);
-        }
-        return $value;
-     }
-     /**
-      * Serializes the given subfield value before being stored.
-      *
-      * It's gonna be called in the "outer" field's `serializeValue()` method.
-      *
-      * @param $value
-      * @param \craft\base\ElementInterface|null $element
-      *
-      * @return string|mixed
-      *
-      * @see \Vierbeuter\Craft\Field\ModuleField::serializeValue()
-      * @see \craft\base\FieldInterface::serializeValue()
-      */
-     public function serializeValue($value, ElementInterface $element = null)
-     {
-        return parent::serializeValue($value, $element);
-     }
+       if (is_string($value)) {
+         $value = json_decode($value, true);
+       }
 
+       if (is_array($value)) {
+          return new ContactModel($value);
+       }
+
+       return null;
+     }
 
     /**
      * @inheritdoc
@@ -117,7 +110,7 @@ class Contactperson extends Field
 
       $jsVars = JsonHelper::encode([
         'id' => $namespaceId,
-        'name' => "fields[".$this->handle."]"
+        'name' => $id
       ]);
 
       // Asset bundle
@@ -129,7 +122,7 @@ class Contactperson extends Field
       $contact = null;
       $element = [];
 
-      if (array_key_exists("person", $value)) {
+      if (isset($value["person"]) && $value["person"] != "") {
         $element[] = Craft::$app->getEntries()->getEntryById((int) $value["person"][0]);
         $contact = $view->renderTemplate('directory-contact/_elements/contactDetail', [
           'contact' => $element[0],

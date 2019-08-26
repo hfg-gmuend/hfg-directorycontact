@@ -11,7 +11,7 @@
 namespace hfg\directorycontact;
 
 use hfg\directorycontact\fields\Contactperson as ContactpersonField;
-use hfg\directorycontact\models\Contact;
+use hfg\directorycontact\models\ContactModel;
 
 use Craft;
 use craft\base\Plugin;

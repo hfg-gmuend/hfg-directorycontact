@@ -20,7 +20,7 @@ ContactPerson.Field = Garnish.Base.extend({
     this.namespace = options.name;
 
     this.$input = $("#" + options.id);
-    this.$container = this.$input.parents(".input");
+    this.$container = this.$input.parents(".contactperson-wrapper");
     this.$elementSelect = this.$input.data("elementSelect");
     this.$details = $(".contact-detail", this.$container);
     this.$spinner = $(".spinner", this.$container);
@@ -49,6 +49,13 @@ ContactPerson.Field = Garnish.Base.extend({
           if (textStatus == "success") {
             _this.$details.html(response.html);
             _this.$details.show();
+
+            $("select", _this.$details).each(function(){
+              let name = $(this).attr("name");
+              let namespaceId = $("input[type='hidden']", _this.$container).attr("name").replace("[person]", name);
+              $(this).attr("name", namespaceId);
+              console.log(namespaceId);
+            });
           }
         })
       );

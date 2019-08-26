@@ -14,17 +14,19 @@
 #}
 
 {% import "_includes/forms" as forms %}
-{{ forms.elementSelectField({
-			id: id,
-			name: name ~ "[person]",
-			elementType: "craft\\elements\\Entry",
-      sources: ["section:"~source.uid],
-      elements: element,
-      showSiteMenu: false,
-      storageKey: 'field.'~field.id,
-			limit: 1
-		}) }}
 
-<div class="contact-detail"> {{ contact|raw }}</div>
+<div class="contactperson-wrapper">
+	{{ forms.elementSelectField({
+				id: id,
+				name: name ~ "[person]",
+				elementType: "craft\\elements\\Entry",
+	      sources: ["section:"~source.uid],
+	      elements: element,
+	      showSiteMenu: false,
+	      storageKey: 'field.'~field.id,
+				limit: 1
+			}) }}
 
-<div class="spinner hidden"></div>
+	<div class="contact-detail"> {{ contact|raw }}</div>
+	<div class="spinner hidden"></div>
+</div>

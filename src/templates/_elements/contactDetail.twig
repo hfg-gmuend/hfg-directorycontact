@@ -15,7 +15,7 @@
 
   {{ forms.selectField({
       id: id ~ "__email",
-      name: name ~ "[email]",
+      name: "[email]",
       label: "E-Mail",
       value: email,
       options: contact.email|split("\n"),
@@ -25,7 +25,7 @@
 
   {{ forms.selectField({
       id: id ~ "__telephone",
-      name: name ~ "[telephone]",
+      name: "[telephone]",
       label: "Telefon",
       value: telephone,
       options: contact.telephone|split("\n"),
