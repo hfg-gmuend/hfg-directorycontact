@@ -12,6 +12,7 @@ namespace hfg\directorycontact;
 
 use hfg\directorycontact\fields\Contactperson as ContactpersonField;
 use hfg\directorycontact\models\ContactModel;
+use hfg\directorycontact\twigextensions\DirectoryContactTwigExtension;
 
 use Craft;
 use craft\base\Plugin;
@@ -65,6 +66,7 @@ class DirectoryContact extends Plugin
         $this->_registerFieldTypes();
         $this->_registerCpRoutes();
         $this->_registerSiteRoutes();
+        $this->_registerTwigExtension();
 
         Craft::info(
             Craft::t(
@@ -75,6 +77,15 @@ class DirectoryContact extends Plugin
             __METHOD__
         );
     }
+
+    public function getEntry($id)
+    {
+      return Craft::$app->getEntries()->getEntryById((int) $id);
+    }
+
+
+    // Private Methods
+    // =========================================================================
 
     private function _registerFieldTypes()
     {
@@ -101,6 +112,11 @@ class DirectoryContact extends Plugin
         ];
         $event->rules = array_merge($event->rules, $rules);
       });
+    }
+
+    private function _registerTwigExtension()
+    {
+      Craft::$app->view->registerTwigExtension(new DirectoryContactTwigExtension());
     }
 
     // Protected Methods
