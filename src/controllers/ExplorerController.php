@@ -26,6 +26,7 @@ class ExplorerController extends Controller
 
     $html = $view->renderTemplate('directory-contact/_elements/contactDetail', [
       'contact' => $contact,
+      'ajax' => true,
       'id' => $id,
       'name' => $name,
       'email' => '',

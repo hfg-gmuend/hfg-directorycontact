@@ -17,9 +17,4 @@ class ContactModel extends Model
       ['person', 'required']
     ];
   }
-
-  public function __toString()
-  {
-
-  }
 }
