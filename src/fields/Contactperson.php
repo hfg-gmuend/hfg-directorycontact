@@ -107,10 +107,11 @@ class Contactperson extends Field
 
       $id = $view->formatInputId($this->handle);
       $namespaceId = $view->namespaceInputId($id);
+      $namespaceName = $view->namespaceInputName($this->handle);
 
       $jsVars = JsonHelper::encode([
         'id' => $namespaceId,
-        'name' => $id
+        'name' => $namespaceName
       ]);
 
       // Asset bundle

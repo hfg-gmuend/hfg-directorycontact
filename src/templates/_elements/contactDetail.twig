@@ -1,8 +1,6 @@
 {% if contact %}
   {% import "_includes/forms" as forms %}
 
-  {% set ajax = (ajax is defined ? ajax : false) %}
-
   {{ forms.textField({
       label: "Name",
       value: [contact.honorific, contact.firstname, contact.lastname]|join(" "),
@@ -17,7 +15,7 @@
 
   {{ forms.selectField({
       id: id ~ "__email",
-      name: (ajax ? "[email]" : name ~ "[email]"),
+      name: name ~ "[email]",
       label: "E-Mail",
       value: email,
       options: contact.email|split("\n"),
@@ -27,7 +25,7 @@
 
   {{ forms.selectField({
       id: id ~ "__telephone",
-      name: (ajax ? "[telephone]" : name ~ "[telephone]"),
+      name: name ~ "[telephone]",
       label: "Telefon",
       value: telephone,
       options: contact.telephone|split("\n"),

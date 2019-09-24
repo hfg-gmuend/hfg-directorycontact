@@ -14,7 +14,6 @@ ContactPerson.Field = Garnish.Base.extend({
 
   init: function(options) {
     options = JSON.parse(options);
-    console.log(options);
 
     this.inputId = options.id;
     this.namespace = options.name;
@@ -30,7 +29,6 @@ ContactPerson.Field = Garnish.Base.extend({
     this.$elementSelect.on("removeElements", function(e) { _this.hideContactDetails(e, _this) });
   },
   getContactDetails: function(e, _this) {
-    console.log(e);
     const entryId = e.elements[0].id;
 
     if (entryId) {
@@ -49,13 +47,6 @@ ContactPerson.Field = Garnish.Base.extend({
           if (textStatus == "success") {
             _this.$details.html(response.html);
             _this.$details.show();
-
-            $("select", _this.$details).each(function(){
-              let name = $(this).attr("name");
-              let namespaceId = $("input[type='hidden']", _this.$container).attr("name").replace("[person]", name);
-              $(this).attr("name", namespaceId);
-              console.log(namespaceId);
-            });
           }
         })
       );
