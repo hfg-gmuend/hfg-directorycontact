@@ -22,7 +22,8 @@ class ExplorerController extends Controller
     $id = $request->getParam("id");
     $name = $request->getParam("name");
 
-    $contact = Craft::$app->getEntries()->getEntryById((int) $entryId);
+    $siteId = Craft::$app->getSites()->getCurrentSite()->id;
+    $contact = Craft::$app->getEntries()->getEntryById((int) $entryId, (int) $siteId);
 
     $html = $view->renderTemplate('directory-contact/_elements/contactDetail', [
       'contact' => $contact,

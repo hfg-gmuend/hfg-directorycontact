@@ -4,6 +4,7 @@ namespace hfg\directorycontact\models;
 
 use Craft;
 use yii\base\Model;
+use hfg\directorycontact\fields\Contactperson;
 
 class ContactModel extends Model
 {
@@ -13,8 +14,11 @@ class ContactModel extends Model
 
   public function rules()
   {
-    return [
+    
+    return array_merge(parent::rules(),
       ['person', 'required']
-    ];
+    );
   }
+
+  
 }

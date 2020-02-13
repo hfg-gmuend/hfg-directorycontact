@@ -14,17 +14,21 @@
 #}
 
 {% import "_includes/forms" as forms %}
+{% set currSite = craft.app.sites.getSiteByHandle( craft.app.request.get("site") ) %}
 
 <div class="contactperson-wrapper">
 	{{ forms.elementSelectField({
 				id: id,
 				name: name ~ "[person]",
 				elementType: "craft\\elements\\Entry",
-	      sources: ["section:"~source.uid],
-	      elements: element,
-	      showSiteMenu: false,
-	      storageKey: 'field.'~field.id,
-				limit: 1
+				sources: ["section:"~source.uid],
+				elements: element,
+				showSiteMenu: false,
+				storageKey: 'field.'~field.id,
+				limit: 1,
+				criteria: {
+					siteId: currSite.id
+				}
 			}) }}
 
 	<div class="contact-detail"> {{ contact|raw }}</div>
