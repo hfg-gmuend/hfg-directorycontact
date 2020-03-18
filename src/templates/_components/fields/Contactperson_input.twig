@@ -14,7 +14,7 @@
 #}
 
 {% import "_includes/forms" as forms %}
-{% set currSite = craft.app.sites.getSiteByHandle( craft.app.request.get("site") ) %}
+{% set currSite = craft.app.sites.getSiteByHandle( craft.app.request.get("site") ?? craft.app.request.getSegment(4) ?? "default" ) %}
 
 <div class="contactperson-wrapper">
 	{{ forms.elementSelectField({

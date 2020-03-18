@@ -139,7 +139,7 @@ class Contactperson extends Field
     $element = [];
 
     if (isset($value["person"]) && $value["person"] != "") {
-      $siteHandle = Craft::$app->request->getParam("site", "drcty");
+      $siteHandle = Craft::$app->request->getParam("site") ?? Craft::$app->request->getSegment(4) ?? "default";
       $siteId = Craft::$app->getSites()->getSiteByHandle($siteHandle)->id;
 
       $element[] = Craft::$app->getEntries()->getEntryById((int) $value["person"][0], (int) $siteId);
