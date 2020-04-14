@@ -136,6 +136,7 @@ class Contactperson extends Field
     $view->registerJs("new ContactPerson.Field('" . $jsVars . "')");
 
     $contact = null;
+    $contactID = null;
     $element = [];
 
     if (isset($value["person"]) && $value["person"] != "") {
@@ -150,6 +151,8 @@ class Contactperson extends Field
         'email' => (isset($value["email"]) ? $value["email"] : ""),
         'telephone' => (isset($value["telephone"]) ? $value["telephone"] : "")
       ]);
+
+      $contactID = $value->getID();
     }
 
     return $view->renderTemplate(
@@ -161,7 +164,8 @@ class Contactperson extends Field
         'source' => Craft::$app->sections->getSectionByHandle($this->source),
         'element' => $element,
         'currentPerson' => $value,
-        'contact' => $contact
+        'contact' => $contact,
+        'contactID' => $contactID
       ]
     );
   }

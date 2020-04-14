@@ -20,5 +20,10 @@ class ContactModel extends Model
     );
   }
 
+  public function getID()
+  {
+    return (int) $this->person[0];
+  }
+
   
 }
