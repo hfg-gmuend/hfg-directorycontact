@@ -17,10 +17,6 @@
 {% set currSite = craft.app.sites.getSiteByHandle( craft.app.request.get("site") ?? craft.app.request.getSegment(4) ?? "default" ) %}
 
 <div class="contactperson-wrapper">
-	{% if name is defined and name %}
-		{{ hiddenInput(name, contactID ?: '') }}
-	{% endif -%}
-
 	{% set id = id %}
 	{% set name = name ~ "[person]" %}
 	{% set elementType = "craft\\elements\\Entry" %}
@@ -30,6 +26,10 @@
 	{% set storageKey = 'field.'~field.id %}
 	{% set limit = 1 %}
 	{% set criteria = { siteId: currSite.id } %}
+
+	{% if name is defined and name %}
+		{{ hiddenInput(name, contactID ?: '') }}
+	{% endif -%}
 
 	{% set elements = (elements is defined and elements ? elements : []) -%}
 	{% set jsClass = (jsClass is defined and jsClass ? jsClass : 'Craft.BaseElementSelectInput') -%}
