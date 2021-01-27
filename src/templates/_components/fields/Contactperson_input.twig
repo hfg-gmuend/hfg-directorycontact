@@ -14,7 +14,7 @@
 #}
 
 {% import "_includes/forms" as forms %}
-{% set currSite = craft.app.sites.getSiteByHandle( craft.app.request.get("site") ?? craft.app.request.getSegment(4) ?? "default" ) %}
+{% set currSite = craft.app.sites.getSiteByHandle( craft.app.request.get("site") ?? craft.app.request.getSegment(5) ?? craft.app.request.getSegment(4) ?? "default" ) %}
 
 <div class="contactperson-wrapper">
 	{% set id = id %}
@@ -75,7 +75,7 @@
 
 	{% js %}
 		new {{ jsClass }}({{ jsSettings|json_encode|raw }});
-	{% endjs %}
+	{% endjs %} #}
 
 	<div class="contact-detail"> {{ contact|raw }}</div>
 	<div class="spinner hidden"></div>
