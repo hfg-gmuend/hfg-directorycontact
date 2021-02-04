@@ -1,4 +1,6 @@
+{# @var entry \craft\elements\Entry #}
 {# @var craft \craft\web\twig\variables\CraftVariable #}
+
 {#
 /**
  * DirectoryContact plugin for Craft CMS 3.x
@@ -14,69 +16,74 @@
 #}
 
 {% import "_includes/forms" as forms %}
-{% set currSite = craft.app.sites.getSiteByHandle( craft.app.request.get("site") ?? craft.app.request.getSegment(5) ?? craft.app.request.getSegment(4) ?? "default" ) %}
+
+{% if "gohfg" in craft.app.request.segments %}
+    {% set currSite = craft.app.sites.getSiteByHandle("goHfgDe") %}
+{% else %}
+    {% set currSite = craft.app.sites.getSiteByHandle( craft.app.request.get("site") ?? craft.app.request.getSegment(4) ?? "default" ) %}
+{% endif %}
 
 <div class="contactperson-wrapper">
-	{% set id = id %}
-	{% set name = name ~ "[person]" %}
-	{% set elementType = "craft\\elements\\Entry" %}
-	{% set sources = ["section:"~source.uid] %}
-	{% set elements = element %}
-	{% set showSiteMenu = false %}
-	{% set storageKey = 'field.'~field.id %}
-	{% set limit = 1 %}
-	{% set criteria = { siteId: currSite.id } %}
+    {% set id = id %}
+    {% set name = name ~ "[person]" %}
+    {% set elementType = "craft\\elements\\Entry" %}
+    {% set sources = ["section:"~source.uid] %}
+    {% set elements = element %}
+    {% set showSiteMenu = false %}
+    {% set storageKey = 'field.'~field.id %}
+    {% set limit = 1 %}
+    {% set criteria = { siteId: currSite.id } %}
 
-	{% if name is defined and name %}
-		{{ hiddenInput(name, contactID ?: '') }}
-	{% endif -%}
+    {% if name is defined and name %}
+        {{ hiddenInput(name, contactID ?: '') }}
+    {% endif -%}
 
-	{% set elements = (elements is defined and elements ? elements : []) -%}
-	{% set jsClass = (jsClass is defined and jsClass ? jsClass : 'Craft.BaseElementSelectInput') -%}
-	{% set sources = (sources is defined and sources ? sources : null) -%}
-	{% set criteria = (criteria is defined and criteria ? criteria : null) -%}
-	{% set sourceElementId = (sourceElementId is defined and sourceElementId ? sourceElementId : null) -%}
-	{% set storageKey = (storageKey is defined and storageKey ? storageKey : null) -%}
-	{% set viewMode = (viewMode is defined ? viewMode : 'list') %}
-	{% set sortable = (sortable is defined ? sortable : true) %}
-	{% set prevalidate = prevalidate ?? false %}
-	{% set fieldId = (fieldId is defined ? fieldId : null) %}
+    {% set elements = (elements is defined and elements ? elements : []) -%}
+    {% set jsClass = (jsClass is defined and jsClass ? jsClass : 'Craft.BaseElementSelectInput') -%}
+    {% set sources = (sources is defined and sources ? sources : null) -%}
+    {% set criteria = (criteria is defined and criteria ? criteria : null) -%}
+    {% set sourceElementId = (sourceElementId is defined and sourceElementId ? sourceElementId : null) -%}
+    {% set storageKey = (storageKey is defined and storageKey ? storageKey : null) -%}
+    {% set viewMode = (viewMode is defined ? viewMode : 'list') %}
+    {% set sortable = (sortable is defined ? sortable : true) %}
+    {% set prevalidate = prevalidate ?? false %}
+    {% set fieldId = (fieldId is defined ? fieldId : null) %}
 
-	<div id="{{ id }}" class="elementselect"
-			{%- if block('attr') is defined %} {{ block('attr') }}{% endif %}>
-		<div class="elements">
-			{% for element in elements %}
-				{% include "_elements/element" with {
-					context: 'field',
-					size: (viewMode == 'large' ? 'large' : 'small')
-				} %}
-			{% endfor %}
-		</div>
+    <div id="{{ id }}" class="elementselect"
+            {%- if block('attr') is defined %} {{ block('attr') }}{% endif %}>
+        <div class="elements">
+            {% for element in elements %}
+                {% include "_elements/element" with {
+                    context: 'field',
+                    size: (viewMode == 'large' ? 'large' : 'small')
+                } %}
+            {% endfor %}
+        </div>
 
-		<div class="btn add icon dashed rounded">{{ selectionLabel is defined ? selectionLabel : "Choose"|t('app') }}</div>
-	</div>
+        <div class="btn add icon dashed rounded">{{ selectionLabel is defined ? selectionLabel : "Choose"|t('app') }}</div>
+    </div>
 
-	{% set jsSettings = {
-		id: id|namespaceInputId,
-		name: name|namespaceInputName,
-		elementType: elementType,
-		sources: sources,
-		criteria: criteria,
-		sourceElementId: sourceElementId,
-		viewMode: viewMode,
-		limit: limit ?? null,
-		showSiteMenu: showSiteMenu ?? false,
-		modalStorageKey: storageKey,
-		fieldId: fieldId,
-		sortable: sortable,
-		prevalidate: prevalidate,
-		modalSettings: modalSettings ?? {},
-	} %}
+    {% set jsSettings = {
+        id: id|namespaceInputId,
+        name: name|namespaceInputName,
+        elementType: elementType,
+        sources: sources,
+        criteria: criteria,
+        sourceElementId: sourceElementId,
+        viewMode: viewMode,
+        limit: limit ?? null,
+        showSiteMenu: showSiteMenu ?? false,
+        modalStorageKey: storageKey,
+        fieldId: fieldId,
+        sortable: sortable,
+        prevalidate: prevalidate,
+        modalSettings: modalSettings ?? {},
+    } %}
 
-	{% js %}
-		new {{ jsClass }}({{ jsSettings|json_encode|raw }});
-	{% endjs %} #}
+    {% js %}
+        new {{ jsClass }}({{ jsSettings|json_encode|raw }});
+    {% endjs %}
 
-	<div class="contact-detail"> {{ contact|raw }}</div>
-	<div class="spinner hidden"></div>
+    <div class="contact-detail"> {{ contact|raw }}</div>
+    <div class="spinner hidden"></div>
 </div>
